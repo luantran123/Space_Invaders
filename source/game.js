@@ -2,7 +2,8 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload:
 var bot;
 var ball;
 var ballreleased;
-
+var score = 0;
+var scoreText;
 
 function preload() {
     
@@ -19,8 +20,14 @@ function create() {
     //game.physics.startSystem(Phaser.Physics.ARCADE);
 
     bot = game.add.sprite(game.world.centerX, 550, 'bot');
+	game.physics.arcade.enable(bot);
     bot.anchor.setTo(0.5, 0.5);
     bot.scale.setTo(2, 2);
+	bot.body.immovable = true;
+	bot.body.collideWorldBounds = true;
+	
+	
+	
    
     ball = game.add.sprite(game.world.centerX-15, 505, 'ball');
     ball.anchor.set(0.5);
@@ -46,7 +53,7 @@ function create() {
             }
         }
     
-
+	scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     game.input.mouse.capture = true;
     ballreleased=false;
 }
@@ -54,6 +61,7 @@ function create() {
 
 function update() {
         
+	
       if (game.input.activePointer.leftButton.isDown)
     {
         ballreleased = true;
@@ -65,8 +73,8 @@ function update() {
   if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
     {
         if(!ballreleased){ 
-        ball.x -= 4 ;}
-        bot.x -= 4;
+        ball.x -= 8 ;}
+        bot.x -= 8;
         
         
     }
@@ -74,14 +82,48 @@ function update() {
     {
         
         if(!ballreleased){ 
-        ball.x += 4 ;}
-        bot.x += 4;
+        ball.x += 8 ;}
+        bot.x += 8;
         
     }
-    
-    
-  
+	game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
+	game.physics.arcade.collide(ball, bot, ballHitPaddle, null, this);
 }
+	
+	function ballHitPaddle (myBall, myBot) {
+
+    var diff = 0;
+
+    if (myBall.x < myBot.x)
+    {
+        //  Ball is on the left-hand side of the paddle
+        diff = myBot.x - myBall.x;
+        myBall.body.velocity.x = (-8 * diff);
+    }
+    else if (myBall.x > myBot.x)
+    {
+        //  Ball is on the right-hand side of the paddle
+        diff = myBall.x - myBot.x;
+        myBall.body.velocity.x = (8 * diff);
+    }
+    else
+    {
+        //  Ball is perfectly in the middle
+        //  Add a little random X to stop it bouncing straight up!
+        myBall.body.velocity.x = 2 + Math.random() * 8;
+    }
+
+}
+    
+function ballHitBrick (myBall, myBrick) {
+
+    score = score +10;
+	
+	//brick.kill();
+    
+
+}  
+
  
 
 
