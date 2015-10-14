@@ -47,12 +47,13 @@ function create() {
     bricks = game.add.group();
     bricks.enableBody = true;
 
-    var brick;
+    
 
         for (var y = 0; y < 5; y++)
         {
             for (var x = 0; x < 14; x++)
             {
+				var brick;
                 brick = bricks.create(100 + (x * 60), 100 + (y * 50), 'leicht', 'leicht.png');
                 brick.body.bounce.set(1);
                 brick.body.immovable = true;
@@ -130,8 +131,8 @@ function update() {
 function ballHitBrick (myBall, myBrick) {
 
     score = score +10;
-	
-	//brick.kill();
+	scoreText.text = 'Score: ' + score;
+	myBrick.kill();
     
 
 }  
