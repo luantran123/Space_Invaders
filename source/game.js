@@ -26,13 +26,7 @@ function create() {
     bot.scale.setTo(2, 2);
 	bot.body.immovable = true;
 	bot.body.collideWorldBounds = true;
-	
-	
-	
-   
     game.physics.arcade.enable(bot);
-    
-    bot.body.collideWorldBounds = true;
     bot.body.bounce.set(1);
     
     
