@@ -1,5 +1,5 @@
 var game = new Phaser.Game(1024, 768, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
-var bot;
+var cursor;
 var ball;
 var ballreleased;
 var score = 0;
@@ -7,7 +7,7 @@ var scoreText;
 
 function preload() {
     
-    game.load.image('bot', 'images/Unbenannt1.png');
+    game.load.image('cursor', 'images/cursor.png');
     game.load.image('leicht', 'images/bloecke/blockleicht/leicht.png');
     game.load.image('Schwer1', 'images/bloecke/blockschwer/StufeEins.png');
     game.load.image('Schwer2', 'images/bloecke/blockschwer/StufeZwei.png');
@@ -20,26 +20,25 @@ function preload() {
 
 function create() {
     
-    
+    //Variabeln
+    ballreleased=false;
     
     //Hintergrund
     land = game.add.tileSprite(0, 0, 1024, 768, 'stars');
     
     
     //Hinzufügen des Cursors
-    bot = game.add.sprite(game.world.centerX, 750, 'bot');
-    bot.anchor.setTo(0.5, 0.5);
-    bot.scale.setTo(2, 2);
-    game.physics.arcade.enable(bot);
-	bot.body.immovable = true;
-	bot.body.collideWorldBounds = true;
-    
-    bot.body.bounce.set(1);
-    
+    cursor= game.add.sprite(game.world.centerX, 745, 'cursor');
+    cursor.anchor.setTo(0.5, 0.5);
+    cursor.scale.setTo(2, 2);
+    game.physics.arcade.enable(cursor);
+	cursor.body.immovable = true;
+	cursor.body.collideWorldBounds = true;
+    cursor.body.bounce.set(1);
     
     
-    
-    ball = game.add.sprite(game.world.centerX, bot.y-30, 'ball');
+    //Hinzufügen des Balls
+    ball = game.add.sprite(game.world.centerX, cursor.y-32, 'ball');
     ball.anchor.set(0.5);
     ball.checkWorldBounds = true;
    
@@ -47,11 +46,14 @@ function create() {
     
     ball.body.collideWorldBounds = true;
     ball.body.bounce.set(1);
+    ball.body.immovable = true;
+    ball.body.allowGravity = false;
+    ball.body.gravity.y = 50;
     
+    
+    //Hinzufügen der Blöcke 
     bricks = game.add.group();
     bricks.enableBody = true;
-
-    
 
         for (var y = 0; y < 3; y++)
         {
@@ -65,22 +67,24 @@ function create() {
         }
     
         for (var y = 3; y < 5; y++)
+        {
+            for (var x = 0; x < 14; x++)
             {
-                for (var x = 0; x < 14; x++)
-                {
-                    var brick;
-                    brick = bricks.create(100 + (x * 60), 100 + (y * 50), 'Schwer1', 'StufeEins.png');
-                    brick.body.bounce.set(1);
-                    brick.body.immovable = true;
-                }
+                var brick;
+                brick = bricks.create(100 + (x * 60), 100 + (y * 50), 'Schwer1', 'StufeEins.png');
+                brick.body.bounce.set(1);
+                brick.body.immovable = true;
             }
+        }
    
     
         
-    
+    //Hinzufügen von Text
 	scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    
+    //Maus aktivieren
     game.input.mouse.capture = true;
-    ballreleased=false;
+   
     
     
     //game.scale.scaleMode=Phaser.ScaleManager.SHOW_ALL;
@@ -92,60 +96,67 @@ function create() {
 
 function update() {
         
-	
-      if (game.input.activePointer.leftButton.isDown)
+	//Linker Mausklick
+    if(!ballreleased)
     {
+    if (game.input.activePointer.leftButton.isDown)
+    {
+        ball.body.allowGravity = true;
         ballreleased = true;
-         ball.body.velocity.y=-150;
+        ball.body.immovable = false;
+        ball.body.velocity.y=-450;
     }
     else {}
+    }
    
 
-  if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
     {
-        if(!ballreleased){ 
-        ball.x -= 8 ;}
-        bot.x -= 8;
         
+        cursor.x -= 8;
+        if(!ballreleased){ 
+        ball.x = cursor.x ;}
         
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
     {
         
+        
+        cursor.x += 8;
         if(!ballreleased){ 
-        ball.x += 8 ;}
-        bot.x += 8;
+        ball.x = cursor.x ;}
         
     }
 	game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
-	game.physics.arcade.collide(ball, bot, ballHitPaddle, null, this);
+	game.physics.arcade.collide(ball, cursor, ballHitCursor, null, this);
 }
 	
-	function ballHitPaddle (myBall, myBot) {
+
+function ballHitCursor (myBall, myCursor) {
 
     var diff = 0;
 
-    if (myBall.x < myBot.x)
+    if (myBall.x < myCursor.x)
     {
         //  Ball is on the left-hand side of the paddle
-        diff = myBot.x - myBall.x;
+        diff = myCursor.x - myBall.x;
         myBall.body.velocity.x = (-8 * diff);
     }
-    else if (myBall.x > myBot.x)
+    else if (myBall.x > myCursor.x)
     {
         //  Ball is on the right-hand side of the paddle
-        diff = myBall.x - myBot.x;
+        diff = myBall.x - myCursor.x;
         myBall.body.velocity.x = (8 * diff);
     }
     else
     {
         //  Ball is perfectly in the middle
-        //  Add a little random X to stop it bouncing straight up!
         myBall.body.velocity.x = 2 + Math.random() * 8;
     }
 
 }
     
+
 function ballHitBrick (myBall, myBrick) {
 
     score = score +10;
