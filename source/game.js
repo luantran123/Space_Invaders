@@ -9,7 +9,7 @@ function preload() {
     game.load.image('bot', 'images/Unbenannt1.png');
     game.load.image('leicht', 'images/leicht.png');
     game.load.image('ball', 'images/ball.png');
-    game.load.image('stars','images/background1.png');
+    game.load.image('stars','images/hintergrund.png');
 }
 
 
@@ -17,7 +17,7 @@ function create() {
     
     land = game.add.tileSprite(0, 0, 1024, 768, 'stars');
 
-    bot = game.add.sprite(game.world.centerX, 550, 'bot');
+    bot = game.add.sprite(game.world.centerX, 750, 'bot');
     bot.anchor.setTo(0.5, 0.5);
     bot.scale.setTo(2, 2);
    
@@ -29,7 +29,7 @@ function create() {
     
     
     
-    ball = game.add.sprite(game.world.centerX-15, 505, 'ball');
+    ball = game.add.sprite(game.world.centerX, bot.y-30, 'ball');
     ball.anchor.set(0.5);
     ball.checkWorldBounds = true;
    
@@ -43,11 +43,11 @@ function create() {
 
     var brick;
 
-        for (var y = 0; y < 4; y++)
+        for (var y = 0; y < 5; y++)
         {
-            for (var x = 0; x < 15; x++)
+            for (var x = 0; x < 14; x++)
             {
-                brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'leicht', 'leicht.png');
+                brick = bricks.create(100 + (x * 60), 100 + (y * 50), 'leicht', 'leicht.png');
                 brick.body.bounce.set(1);
                 brick.body.immovable = true;
             }
