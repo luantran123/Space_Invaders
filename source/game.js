@@ -8,7 +8,11 @@ var scoreText;
 function preload() {
     
     game.load.image('bot', 'images/Unbenannt1.png');
-    game.load.image('leicht', 'images/leicht.png');
+    game.load.image('leicht', 'images/bloecke/blockleicht/leicht.png');
+    game.load.image('Schwer1', 'images/bloecke/blockschwer/StufeEins.png');
+    game.load.image('Schwer2', 'images/bloecke/blockschwer/StufeZwei.png');
+    game.load.image('Schwer3', 'images/bloecke/blockschwer/StufeDrei.png');
+    game.load.image('Schwer4', 'images/bloecke/blockschwer/StufeVier.png');
     game.load.image('ball', 'images/ball.png');
     game.load.image('stars','images/hintergrund.png');
 }
@@ -49,7 +53,7 @@ function create() {
 
     
 
-        for (var y = 0; y < 5; y++)
+        for (var y = 0; y < 3; y++)
         {
             for (var x = 0; x < 14; x++)
             {
@@ -59,6 +63,20 @@ function create() {
                 brick.body.immovable = true;
             }
         }
+    
+        for (var y = 3; y < 5; y++)
+            {
+                for (var x = 0; x < 14; x++)
+                {
+                    var brick;
+                    brick = bricks.create(100 + (x * 60), 100 + (y * 50), 'Schwer1', 'StufeEins.png');
+                    brick.body.bounce.set(1);
+                    brick.body.immovable = true;
+                }
+            }
+   
+    
+        
     
 	scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     game.input.mouse.capture = true;
