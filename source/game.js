@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(1024, 768, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
 var bot;
 var ball;
 var ballreleased;
@@ -15,13 +15,20 @@ function preload() {
 
 function create() {
     
-    land = game.add.tileSprite(0, 0, 800, 600, 'stars');
-    //game.physics.startSystem(Phaser.Physics.ARCADE);
+    land = game.add.tileSprite(0, 0, 1024, 768, 'stars');
 
     bot = game.add.sprite(game.world.centerX, 550, 'bot');
     bot.anchor.setTo(0.5, 0.5);
     bot.scale.setTo(2, 2);
    
+    game.physics.arcade.enable(bot);
+    
+    bot.body.collideWorldBounds = true;
+    bot.body.bounce.set(1);
+    
+    
+    
+    
     ball = game.add.sprite(game.world.centerX-15, 505, 'ball');
     ball.anchor.set(0.5);
     ball.checkWorldBounds = true;
@@ -49,6 +56,12 @@ function create() {
 
     game.input.mouse.capture = true;
     ballreleased=false;
+    
+    
+    //game.scale.scaleMode=Phaser.ScaleManager.SHOW_ALL;
+    //game.scale.pageAlignHorizontally=true;
+    //game.scale.pageAlighVertically=true;
+    //game.scale.setScreenSize(true);
 }
    
 
@@ -85,7 +98,4 @@ function update() {
  
 
 
-        
-
-
-
+    
