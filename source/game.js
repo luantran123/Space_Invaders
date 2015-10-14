@@ -18,12 +18,10 @@ function create() {
     
     land = game.add.tileSprite(0, 0, 1024, 768, 'stars');
 
-<<<<<<< HEAD
+
     bot = game.add.sprite(game.world.centerX, 750, 'bot');
-=======
-    bot = game.add.sprite(game.world.centerX, 550, 'bot');
-	game.physics.arcade.enable(bot);
->>>>>>> origin/master
+
+
     bot.anchor.setTo(0.5, 0.5);
     bot.scale.setTo(2, 2);
 	bot.body.immovable = true;
