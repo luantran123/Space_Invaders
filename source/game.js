@@ -23,12 +23,16 @@ function create() {
     bot.scale.setTo(2, 2);
    
     ball = game.add.sprite(game.world.centerX-15, 505, 'ball');
+    ball.anchor.set(0.5);
+    ball.checkWorldBounds = true;
+   
     game.physics.arcade.enable(ball);
     
+    ball.body.collideWorldBounds = true;
+    ball.body.bounce.set(1);
     
     bricks = game.add.group();
     bricks.enableBody = true;
-   // bricks.physicsBodyType = Phaser.Physics.ARCADE;
 
     var brick;
 
