@@ -16,17 +16,20 @@ function preload() {
 
 function create() {
     
+    
+    
+    //Hintergrund
     land = game.add.tileSprite(0, 0, 1024, 768, 'stars');
-
-
+    
+    
+    //Hinzufügen des Cursors
     bot = game.add.sprite(game.world.centerX, 750, 'bot');
-
-
     bot.anchor.setTo(0.5, 0.5);
     bot.scale.setTo(2, 2);
+    game.physics.arcade.enable(bot);
 	bot.body.immovable = true;
 	bot.body.collideWorldBounds = true;
-    game.physics.arcade.enable(bot);
+    
     bot.body.bounce.set(1);
     
     
