@@ -4,6 +4,8 @@ var ball;
 var ballreleased;
 var score = 0;
 var scoreText;
+var life = 3;
+var lifeText;
 
 function preload() {
     
@@ -36,24 +38,14 @@ function create() {
 	cursor.body.collideWorldBounds = true;
     cursor.body.bounce.set(1);
     
-    
-    //Hinzufügen des Balls
-    ball = game.add.sprite(game.world.centerX, cursor.y-32, 'ball');
-    ball.anchor.set(0.5);
-    ball.checkWorldBounds = true;
-   
-    game.physics.arcade.enable(ball);
-    
-    ball.body.collideWorldBounds = true;
-    ball.body.bounce.set(1);
-    ball.body.immovable = true;
-    ball.body.allowGravity = false;
-    ball.body.gravity.y = 50;
-    
-    
+    createBall();
+	
     //Hinzufügen der Blöcke 
     bricks = game.add.group();
     bricks.enableBody = true;
+
+	bottom = game.add.group();
+	bottom.enableBody = true;
 
         for (var y = 0; y < 3; y++)
         {
@@ -76,12 +68,15 @@ function create() {
                 brick.body.immovable = true;
             }
         }
-   
-    
+
+	var bot = bottom.create(1024, 500, 'bottom', 'StufeEins.png');
         
-    //Hinzufügen von Text
+    //Hinzufügen von Score
 	scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-    
+	
+	//Hinzufügen von Leben
+	lifeText = game.add.text(900, 16, 'lifes: 3', { fontSize: '32px', fill: '#000'});
+	
     //Maus aktivieren
     game.input.mouse.capture = true;
    
@@ -127,6 +122,12 @@ function update() {
         ball.x = cursor.x ;}
         
     }
+	
+	if(ball.body.onFloor() || ball.body.touching.down)
+	{
+		ballHitBottom(ball);
+	}
+	
 	game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
 	game.physics.arcade.collide(ball, cursor, ballHitCursor, null, this);
 }
@@ -166,6 +167,36 @@ function ballHitBrick (myBall, myBrick) {
 
 }  
 
+function ballHitBottom (myBall) {
+	life--;
+	lifeText.text = 'lifes: ' + life;
+	myBall.kill();
+	if(life >= 0)
+	{
+		ballreleased = false;
+		createBall();
+	}
+	else
+	{
+		defeatText = game.add.text(500, 500, 'YOU SUCK!!!', { fontSize: '32px', fill: '#000'});
+	}
+}
+
+function createBall()
+{
+	//Hinzufügen des Balls
+    ball = game.add.sprite(cursor.x, cursor.y-32, 'ball');
+    ball.anchor.set(0.5);
+
+    game.physics.arcade.enable(ball);
+    
+    ball.body.collideWorldBounds = true;
+    ball.checkWorldBounds = true;
+    ball.body.bounce.set(1);
+    ball.body.immovable = true;
+    ball.body.allowGravity = false;
+    ball.body.gravity.y = 50;
+}
  
 
 
