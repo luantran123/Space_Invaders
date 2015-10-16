@@ -168,17 +168,20 @@ function ballHitBrick (myBall, myBrick) {
 }  
 
 function ballHitBottom (myBall) {
-	life--;
-	lifeText.text = 'lifes: ' + life;
-	myBall.kill();
-	if(life >= 0)
+
+	if(life > 0)
 	{
+			
+		life--;
+		lifeText.text = 'lifes: ' + life;
+		myBall.kill();
 		ballreleased = false;
 		createBall();
 	}
 	else
 	{
-		defeatText = game.add.text(500, 500, 'YOU SUCK!!!', { fontSize: '32px', fill: '#000'});
+		game.add.text(500, 500, 'YOU SUCK!!!', { fontSize: '32px', fill: '#000'});
+		game.paused = true;
 	}
 }
 
