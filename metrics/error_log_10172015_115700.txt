@@ -1,0 +1,2 @@
+Warning: Truncated 3 line(s) in file (D:\Development\GitHub\Space_Invaders\source\phaser.js)
+Warning: Truncated 4 line(s) in file (D:\Development\GitHub\Space_Invaders\source\phaser.min.js)
