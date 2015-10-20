@@ -32,7 +32,6 @@ function create() {
     //Hinzufügen des Cursors
     cursor= game.add.sprite(game.world.centerX, 745, 'cursor');
     cursor.anchor.setTo(0.5, 0.5);
-    cursor.scale.setTo(2, 2);
     game.physics.arcade.enable(cursor);
 	cursor.body.immovable = true;
 	cursor.body.collideWorldBounds = true;
