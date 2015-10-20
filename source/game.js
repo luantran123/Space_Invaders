@@ -16,7 +16,7 @@ function preload() {
     game.load.image('Schwer3', 'images/bloecke/blockschwer/StufeDrei.png');
     game.load.image('Schwer4', 'images/bloecke/blockschwer/StufeVier.png');
     game.load.image('ball', 'images/ball.png');
-    game.load.image('stars','images/hintergrund.png');
+    game.load.image('mario1','images/hintergrund.png');
 }
 
 
@@ -26,7 +26,7 @@ function create() {
     ballreleased=false;
     
     //Hintergrund
-    land = game.add.tileSprite(0, 0, 1024, 768, 'stars');
+    land = game.add.tileSprite(0, 0, 1024, 768, 'mario1');
     
     
     //Hinzufügen des Cursors
@@ -90,7 +90,9 @@ function create() {
    
 
 function update() {
-        
+    
+    
+    
 	//Linker Mausklick
     if(!ballreleased)
     {
@@ -108,7 +110,7 @@ function update() {
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
     {
         
-        cursor.x -= 8;
+        cursor.x -= 20;
         if(!ballreleased){ 
         ball.x = cursor.x ;}
         
@@ -117,11 +119,14 @@ function update() {
     {
         
         
-        cursor.x += 8;
+        cursor.x += 20;
         if(!ballreleased){ 
         ball.x = cursor.x ;}
         
     }
+    
+
+    
 	
 	if(ball.body.onFloor() || ball.body.touching.down)
 	{
@@ -201,6 +206,3 @@ function createBall()
     ball.body.gravity.y = 50;
 }
  
-
-
-    
