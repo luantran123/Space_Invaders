@@ -6,6 +6,7 @@ var score = 0;
 var scoreText;
 var life = 3;
 var lifeText;
+var brickcount=0;
 
 function preload() {
     
@@ -171,6 +172,15 @@ function ballHitBrick (myBall, myBrick) {
     score = score +10;
 	scoreText.text = 'Score: ' + score;
 	myBrick.kill();
+	brickcount= brickcount +1;
+	//var count ="number of Brick" + brickcount
+	//game.add.text(420, 500, count, { fontSize: '40px', fill: '#000'});
+	if(brickcount==70)
+	{
+		game.add.text(420, 500, 'YOU WON!!!', { fontSize: '40px', fill: '#000'});
+		game.paused = true;
+	}
+	
     
 
 }  
