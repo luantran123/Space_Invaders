@@ -17,10 +17,14 @@ function preload() {
     game.load.image('Schwer4', 'images/bloecke/blockschwer/StufeVier.png');
     game.load.image('ball', 'images/ball.png');
     game.load.image('mario1','images/hintergrund.png');
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+    
 }
 
 
 function create() {
+    
     
     //Variabeln
     ballreleased=false;
@@ -184,7 +188,7 @@ function ballHitBottom (myBall) {
 	}
 	else
 	{
-		game.add.text(500, 500, 'YOU SUCK!!!', { fontSize: '32px', fill: '#000'});
+		game.add.text(420, 500, 'YOU SUCK!!!', { fontSize: '40px', fill: '#000'});
 		game.paused = true;
 	}
 }
