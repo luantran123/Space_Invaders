@@ -71,10 +71,7 @@ Break.Game.prototype = {
 
 
 
-        //game.scale.scaleMode=Phaser.ScaleManager.SHOW_ALL;
-        //game.scale.pageAlignHorizontally=true;
-        //game.scale.pageAlighVertically=true;
-        //game.scale.setScreenSize(true);
+       
     },
 
 

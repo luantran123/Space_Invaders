@@ -15,7 +15,10 @@ Break.Preloader.prototype = {
     this.load.image('ball', 'images/ball.png');
     this.load.image('mario1','images/hintergrund.png');
     this.load.image('mario0','images/startbackground.png');
-    this.load.spritesheet('menu','images/jpg.png', 128,128);
+    this.load.image('startbutton','images/startbutton.png');  
+    this.load.image('supermario','images/supermario.png');  
+    this.load.image('boden','images/boden.png');  
+
 
     },
     
