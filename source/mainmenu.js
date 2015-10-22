@@ -1,5 +1,7 @@
-Break.MainMenu = function(game) {
-    var button;
+﻿Break.MainMenu = function(game) {
+    var startbutton;
+    var soundbutton;
+    var hardbutton;
     var supermario;
     var boden;
 };
@@ -7,8 +9,15 @@ Break.MainMenu = function(game) {
 Break.MainMenu.prototype = {
     create: function() {
         background = this.add.tileSprite(0, 0, 1024, 768, 'mario0');
-        button= this.game.add.button(200, 430, 'startbutton', this.startGame, this, 1, 0, 2);
-        button.anchor.setTo(0.5,0.5);
+        startbutton= this.game.add.button(200, 430, 'startbutton', this.startGame, this);
+        startbutton.anchor.setTo(0.5,0.5);
+
+	soundbutton= this.game.add.button(830, 430, 'soundbutton',this.startGame, this);
+        soundbutton.anchor.setTo(0.5,0.5);
+
+	hardbutton= this.game.add.button(515, 430, 'hardbutton',this.startGame,  this);
+        hardbutton.anchor.setTo(0.5,0.5);
+	hardbutton.scale.set(0.13);
         
         
         
