@@ -11,6 +11,8 @@ Break.MainMenu.prototype = {
         button.anchor.setTo(0.5,0.5);
         
         
+        
+        //Olivier: Supermario bewegt sich(so wie Ball), er soll aber nicht vom unteren Rand der Welt abprallen sondern von "Boden"
         supermario= this.add.sprite(190, 580, 'supermario');
         supermario.scale.set(0.5);
         supermario.anchor.set(0.5);
@@ -24,7 +26,7 @@ Break.MainMenu.prototype = {
         supermario.body.immovable = true;
         
         
-        
+        //Olivier: Das hier ist "Boden". Mario soll darauf herumhüpfen (so wie Cursor)
         boden= this.add.sprite(0, 705, 'boden');
         this.physics.arcade.enable(boden);
         
