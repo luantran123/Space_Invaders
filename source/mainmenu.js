@@ -1,9 +1,11 @@
-﻿Break.MainMenu = function(game) {
+Break.MainMenu = function(game) {
     var startbutton;
     var soundbutton;
     var hardbutton;
     var supermario;
     var boden;
+    var key1;
+    var key2;
 };
 
 Break.MainMenu.prototype = {
@@ -19,7 +21,11 @@ Break.MainMenu.prototype = {
         hardbutton.anchor.setTo(0.5,0.5);
 	hardbutton.scale.set(0.13);
         
+        key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    key1.onDown.add(this.movemarioleft, this);
         
+           key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    key2.onDown.add(this.movemarioright, this);
         
         //Olivier: Supermario bewegt sich(so wie Ball), er soll aber nicht vom unteren Rand der Welt abprallen sondern von "Boden"
         supermario= this.add.sprite(190, 580, 'supermario');
@@ -27,8 +33,8 @@ Break.MainMenu.prototype = {
         supermario.anchor.set(0.5);
 
         this.physics.arcade.enable(supermario);
-    	supermario.body.velocity.setTo(0, -700);
-        supermario.body.gravity.set(0, 7000);
+    	supermario.body.velocity.setTo(0, -500);
+        supermario.body.gravity.set(0, 5000);
         supermario.body.collideWorldBounds = true;
         supermario.checkWorldBounds = true;
         supermario.body.bounce.set(1);
@@ -48,6 +54,19 @@ Break.MainMenu.prototype = {
         
     },
     
+    movemarioright: function() {
+       if(!(supermario.x==820)){
+            supermario.x += 315;
+        }
+       
+    },
+    
+    movemarioleft: function() {
+        if(!(supermario.x==190)){
+            supermario.x -= 315;
+        }
+       
+    },
     
     startGame: function() {
         this.game.state.start('Game');
