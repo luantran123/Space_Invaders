@@ -4,8 +4,8 @@ Break.MainMenu = function(game) {
     var hardbutton;
     var supermario;
     var boden;
-    var key1;
-    var key2;
+    //var key1;
+    //var key2;
 };
 
 Break.MainMenu.prototype = {
@@ -14,22 +14,18 @@ Break.MainMenu.prototype = {
 		//Activate Keyboard
 	cursors = this.input.keyboard.createCursorKeys();
 		
+      
+        
         background = this.add.tileSprite(0, 0, 1024, 768, 'mario0');
-        startbutton= this.game.add.button(200, 430, 'startbutton', this.startGame, this);
-        startbutton.anchor.setTo(0.5,0.5);
-
-	soundbutton= this.game.add.button(830, 430, 'soundbutton',this.startGame, this);
-        soundbutton.anchor.setTo(0.5,0.5);
-
-	hardbutton= this.game.add.button(515, 430, 'hardbutton',this.startGame,  this);
-        hardbutton.anchor.setTo(0.5,0.5);
-	hardbutton.scale.set(0.13);
+      
         
+        
+        /* Bitte nicht löschen
         key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-    key1.onDown.add(this.movemarioleft, this);
-        
-           key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-    key2.onDown.add(this.movemarioright, this);
+        key1.onDown.add(this.movemarioleft, this);
+        key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        key2.onDown.add(this.movemarioright, this);
+        */
         
         //Olivier: Supermario bewegt sich(so wie Ball), er soll aber nicht vom unteren Rand der Welt abprallen sondern von "Boden"
         supermario= this.add.sprite(190, 580, 'supermario');
@@ -39,12 +35,10 @@ Break.MainMenu.prototype = {
         this.physics.arcade.enable(supermario);
 
     	supermario.body.velocity.setTo(0, 0);
-        supermario.body.gravity.set(0, 600);
-
+        supermario.body.gravity.set(0, 6000);
         supermario.body.collideWorldBounds = true;
         supermario.checkWorldBounds = true;
         supermario.body.bounce.set(0.21);
-        //supermario.body.immovable = true;
     
         
         //Olivier: Das hier ist "Boden". Mario soll darauf herumhüpfen (so wie Cursor)
@@ -55,60 +49,81 @@ Break.MainMenu.prototype = {
         boden.body.collideWorldBounds = true;
         boden.checkWorldBounds = true;
         boden.body.bounce.set(1);
-            
-		this.physics.arcade.collide(supermario, boden);
-
+        
+        
+        //Startknopf
+        
+        startbutton= this.add.sprite(200, 422, 'startbutton');
+        startbutton.anchor.setTo(0.5,0.5);
+        this.physics.arcade.enable(startbutton);
+        startbutton.body.immovable = true;
+        startbutton.body.collideWorldBounds = true;
+        startbutton.checkWorldBounds = true;
+        startbutton.body.bounce.set(1);
+        
+        //Soundknopf
+        soundbutton= this.add.sprite(830, 430, 'soundbutton');
+        soundbutton.anchor.setTo(0.5,0.5);
+        this.physics.arcade.enable(soundbutton);
+        soundbutton.body.immovable = true;
+        soundbutton.body.collideWorldBounds = true;
+        soundbutton.checkWorldBounds = true;
+        soundbutton.body.bounce.set(1);
+        
+        //Schwierigkeitsknopf
+        
+         hardbutton= this.add.sprite(515, 430, 'hardbutton');
+        hardbutton.anchor.setTo(0.5,0.5);
+        hardbutton.scale.set(0.13);
+        this.physics.arcade.enable(hardbutton);
+        hardbutton.body.immovable = true;
+        hardbutton.body.collideWorldBounds = true;
+        hardbutton.checkWorldBounds = true;
+        hardbutton.body.bounce.set(1);
         
     },
     
 
-    movemarioright: function() {
-       if(!(supermario.x==820)){
-            supermario.x += 315;
-        }
        
-    },
-    
-    movemarioleft: function() {
-        if(!(supermario.x==190)){
-            supermario.x -= 315;
-        }
-       
-    },
-    
     update: function() {
 	
 	this.physics.arcade.collide(supermario, boden);
+    this.physics.arcade.collide(supermario, startbutton, this.marioHitStart, null, this);
+        this.physics.arcade.collide(supermario, hardbutton);
+        this.physics.arcade.collide(supermario, soundbutton);
 	
 	//  Reset the velocity
-	supermario.body.velocity.x = 0;
+	//supermario.body.velocity.x = 0;
+         if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+        {
 
-    if (cursors.left.isDown)
-    {
-        //  Move to the left
-        supermario.body.velocity.x = -150;
-
+            supermario.x -= 25;
+            
         supermario.animations.play('left');
-    }
-    else if (cursors.right.isDown)
-    {
-        //  Move to the right
-        supermario.body.velocity.x = 150;
 
+        }
+        else if (this.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+        {
+
+
+            supermario.x += 12;
+            
         supermario.animations.play('right');
-    }
-    else
-    {
+        }
+            
+        
+        else
+        {
         //  Do nothing
         supermario.animations.stop();
 
         supermario.frame = 4;
-    }
+        }
 
     //  Jump only if Mario is already touching the ground
     if (cursors.up.isDown && supermario.body.touching.down)
     {
-        supermario.body.velocity.y = -550;
+        supermario.body.velocity.y = -2150;
     }
 	
 	},
@@ -116,6 +131,11 @@ Break.MainMenu.prototype = {
 
     startGame: function() {
         this.game.state.start('Game');
+    },
+    
+    marioHitStart: function() {
+         if(supermario.body.touching.up){
+        this.startGame();}
     }
     
 };
