@@ -37,13 +37,10 @@ Break.MainMenu.prototype = {
         supermario.anchor.set(0.5);
 
         this.physics.arcade.enable(supermario);
-<<<<<<< HEAD
-    	supermario.body.velocity.setTo(0, -500);
-        supermario.body.gravity.set(0, 5000);
-=======
+
     	supermario.body.velocity.setTo(0, 0);
         supermario.body.gravity.set(0, 600);
->>>>>>> origin/master
+
         supermario.body.collideWorldBounds = true;
         supermario.checkWorldBounds = true;
         supermario.body.bounce.set(0.21);
@@ -64,7 +61,7 @@ Break.MainMenu.prototype = {
         
     },
     
-<<<<<<< HEAD
+
     movemarioright: function() {
        if(!(supermario.x==820)){
             supermario.x += 315;
@@ -79,7 +76,6 @@ Break.MainMenu.prototype = {
        
     },
     
-=======
     update: function() {
 	
 	this.physics.arcade.collide(supermario, boden);
@@ -117,7 +113,7 @@ Break.MainMenu.prototype = {
 	
 	},
 	
->>>>>>> origin/master
+
     startGame: function() {
         this.game.state.start('Game');
     }
