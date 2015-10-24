@@ -97,7 +97,7 @@ Break.MainMenu.prototype = {
          if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT))
         {
 
-            supermario.x -= 25;
+            supermario.x -= 12;
             
         supermario.animations.play('left');
 
