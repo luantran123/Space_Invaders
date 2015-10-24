@@ -62,7 +62,7 @@ Break.MainMenu.prototype = {
         startbutton.body.bounce.set(1);
         
         //Soundknopf
-        soundbutton= this.add.sprite(830, 430, 'soundbutton');
+        soundbutton= this.add.sprite(830, 422, 'soundbutton');
         soundbutton.anchor.setTo(0.5,0.5);
         this.physics.arcade.enable(soundbutton);
         soundbutton.body.immovable = true;
@@ -72,7 +72,7 @@ Break.MainMenu.prototype = {
         
         //Schwierigkeitsknopf
         
-         hardbutton= this.add.sprite(515, 430, 'hardbutton');
+         hardbutton= this.add.sprite(515, 422, 'hardbutton');
         hardbutton.anchor.setTo(0.5,0.5);
         hardbutton.scale.set(0.13);
         this.physics.arcade.enable(hardbutton);
